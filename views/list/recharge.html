@@ -1,0 +1,90 @@
+<div class="main-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="title">充值明细</h1>
+				<div class="main-search">
+					<form>
+						<p style="margin-bottom:20px;"><label for="textfield">充值金额:</label>
+							<input type="text" reg='float' name="textfield" id="textfield" style="width:130px;">	- <input type="text" name="textfield" reg='float' id="textfield1" style="width:130px;">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="textfield">充值时间:</label>
+							<input type="text" datepicker='datepicker' readonly name="start" id="start" style="width:145px;">	- <input type="text" readonly name="end" datepicker='datepicker' id="end" style="width:145px;">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="">充值结果:</label>
+							<select name="select" id="select" style="width:125px;">
+								<option>请选择</option>
+							</select>
+						</p>
+						<p class="text-right">
+							<button class="btn btn-submit" type="button">查询</button>&nbsp;&nbsp;<button class="btn btn-reset" type="reset">重置</button>
+						</p>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table-box table-user">
+				<table class="table table-hover" id="table_form">
+					<thead>
+					<tr>
+						<th width="20%">姓名</th>
+						<th width="24%">合同编号</th>
+						<th width="20%">充值金额</th>
+						<th width="20%">充值时间</th>
+						<th>充值结果</th>
+					</tr>
+					</thead>
+					<tbody>
+					
+					</tbody>
+				</table>
+			</div>			
+			<div style="text-align: center;">
+				<ul class="pagination" id="pagination"></ul>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	!function(){
+		var methods = hmd.methods,
+			service = hmd.service;
+		function render(msg){
+			$('#table_form').find('tbody').html(methods.generateStringByTemplate({
+				id : '_recharge',
+				params : {
+					'%id':'id',
+					'%contract':'contract',
+					'%username':'username',
+					'%money':'money',
+					'%result':'result'
+				},
+				data : msg
+			}))
+		}
+		function fetchData(){
+			service.getData(function(msg){
+				render(msg);
+				methods.pagination({
+					totalPages : msg.length,
+					callback : function(num,type){
+						//console.log(num,type)
+					}
+				})
+			})
+		}
+		var init = (function(){			
+			return function(){
+				methods.timePicker({
+					start : 'start',
+					end : 'end'
+				});
+				fetchData()				
+			}
+		}())
+		init();		
+	}()
+</script>

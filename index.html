@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <title>客户充值系统</title>
+    <link rel="stylesheet" type="text/css" href="./style/css/bootstrap.min.css"/>
+     <link rel="stylesheet" type="text/css" href="./style/css/jquery-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="./style/css/style.css"/>
+    <!--[if lt IE 9]>
+    <script src="./script/Libs/html5shiv.min.js"></script>
+    <script src="./script/Libs/respond.js"></script>
+    <![endif]-->
+  </head>
+  <body>    
+    <div id="root"></div>
+    <script type="text/template" id="content">
+      <h-head />
+      <h-main />
+      <h-footer />
+    </script>
+    <script type="text/template" id="_login_temp">
+      <h-login />
+    </script>
+    <script type="text/template" id="_contract">
+      <tr>
+        <td scope="row">%id</td>
+        <td scope="row"><span>%contract</span></td>
+        <td scope="row">%username</td>
+        <td scope="row">%money</td>
+        <td><a href="javascript;" contract='%id' class="btn btn-submit">充值</a></td>
+      </tr>
+    </script>
+    <script type="text/template" id="_recharge">
+      <tr>
+        <td>%id</td>
+        <td><span>%contract</span></td>
+        <td>%username</td>
+        <td>%money</td>
+        <td>%result</td>
+      </tr>
+    </script>
+    <script src="./script/Libs/jquery.1.9.min.js"></script>
+    <script src="./script/hmd.js"></script>
+    <script src="./script/Router/AppCommonRouter.js"></script>
+    <script src="./script/Controller/index.js"></script>
+  </body>
+</html>
