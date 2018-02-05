@@ -11,17 +11,17 @@
 <div class="container">
 	<div class="row content">
 		<form class="content_in">
-			<div class="content_box">
+			<div class="content_box" id="contentBox">
 				<div class="input">
-					<input type="text" maxlength="20" id="idCard" class="idCard" value="身份证号码">
+					<input type="text" maxlength="20" id="idCard" class="idCard" value="身份证号码" inputReg="reg">
 				</div>
 				<div class="input float input_div">
-					<input maxlength="11" id="tel_num" class="tel_num" type="text" value="手机号">
+					<input maxlength="11" id="tel_num" class="tel_num" type="text" value="手机号" inputReg="reg">
 					<span class="login_span"></span>
 					<button type="button" id="send_check_num" class="reset_input code_button">发送验证码</button>
 				</div>
 				<div class="input reset_input_martop">
-					<input type="text" id="check_num" class="idCard" value="验证码">
+					<input type="text" id="check_num" class="idCard" value="验证码" inputReg="reg">
 				</div>
 				<div class="message" id="info">提示语信息！</div>
 				<button type="button" class="btn button" id="login_submit">登 录</button>
