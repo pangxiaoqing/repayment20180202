@@ -11,21 +11,49 @@
 <div class="container">
 	<div class="row content">
 		<form class="content_in">
-			<div class="content_box" id="contentBox">
-				<div class="input">
-					<input type="text" maxlength="20" id="idCard" class="idCard" value="身份证号码" inputReg="reg">
+			<div id="nav">
+				<a href="javascript:;" class="on nav_left">登录方式一</a>
+				<a href="javascript:;" class="nav_right">登录方式二</a>
+			</div>
+			<div id="contentBox">
+				<div class="box">
+					<div class="input martop26">
+						<label for="daichangContractCode">合同编号</label>
+						<input type="text" maxlength="20" id="daichangContractCode" class="idCard">
+					</div>
+					<div class="input">
+						<label for="daichangIdCard">身份证号码</label>
+						<input type="text" maxlength="20" id="daichangIdCard" class="idCard">
+					</div>
+					<div class="input identifying_code">
+						<label for="telNum">验证码</label>
+						<input maxlength="11" id="telNum" class="tel_num" type="text">
+						<span class="login_span"></span>
+						<img id="daichangImg" src="" alt="">
+						<div class="refresh" id="refresh"></div>
+					</div>
+					<div class="message" id="daichangInfo">提示语信息！</div>
+					<button type="button" class="btn button" id="daichangLoginSubmit">登 录</button>
 				</div>
-				<div class="input float input_div">
-					<input maxlength="11" id="tel_num" class="tel_num" type="text" value="手机号" inputReg="reg">
-					<span class="login_span"></span>
-					<button type="button" id="send_check_num" class="reset_input code_button">发送验证码</button>
+				<div class="box">
+					<div class="input martop26">
+						<label for="idCard">身份证号</label>
+						<input type="text" maxlength="20" id="idCard" class="idCard">
+					</div>
+					<div class="input tel_sendcode">
+						<label for="tel_num">手机号</label>
+						<input maxlength="11" id="tel_num" class="idCard" type="text">
+						<span class="login_span"></span>
+						<!--<button type="button" id="send_check_num" class="reset_input code_button">发送验证码</button>-->
+						<a href="javascript:;" id="send_check_num" class="code_button code_button_cur">发送验证码</a>
+					</div>
+					<div class="input">
+						<label for="check_num">验证码</label>
+						<input type="text" id="check_num" class="idCard">
+					</div>
+					<div class="message" id="info">提示语信息！</div>
+					<button type="button" class="btn button" id="login_submit">登 录</button>
 				</div>
-				<div class="input reset_input_martop">
-					<input type="text" id="check_num" class="idCard" value="验证码" inputReg="reg">
-				</div>
-				<div class="message" id="info">提示语信息！</div>
-				<button type="button" class="btn button" id="login_submit">登 录</button>
-				<!--id="login_submit"-->
 			</div>
 		</form>
 	</div>
@@ -34,7 +62,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<p>Copyright © 2015 - 2016 充值管理 All Rights Reserved 联系我们</p>
+				<p>Copyright © 2015 - 2016 充值管理 All Rights Reserved | 京ICP备16051532号</p>
 			</div>
 		</div>
 	</div>

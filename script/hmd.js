@@ -67,21 +67,39 @@
 			var url = obj.url,
 				type = obj.type || 'get',
 				data = obj.data || {},
+				async = obj.async == 1 ? false : true,
 				dataType = obj.dataType || 'string',
 				self = this;
+			if(!!$("#customerName")[0]){
+                data.token = $("#customerName").attr("_token")
+			}
+
 			$.ajax({
 				url : url,
 				type : type,
 				data : data,
+				async : async,
 				dataType : dataType,
 				success : function(msg){
-					callback.call(self,msg);
+					self.valdateLogin(msg,self,callback)
+					//callback.call(self,msg);
 				},
 				error : function(e,t){
 					console.log(e,t)
 				}
 			});
 		},
+		/*验证登录超时*/
+        valdateLogin:function(data,context,callback){
+            if(data.code === "104001"){
+                hmd.component({
+                    temp: '_login_temp',
+                    id: 'root'
+                })
+            }else{
+            	callback.call(context,data);
+            }
+        },
 		ws : function(url,callback){
 			var self = this;
 			if ("WebSocket" in window){

@@ -37,24 +37,104 @@
 		var methods = hmd.methods,
 			service = hmd.service
 		function fetchData(){
-			service.getData(function(msg){
-				$('#table_form').find('tbody').html(methods.generateStringByTemplate({
-					id : '_contract',
-					params : {
-						'%id':'id',
-						'%contract':'contract',
-						'%username':'username',
-						'%money':'money'
-					},
-					data : msg
-				}))
+			/*渲染合同信息页面的接口*/
+			service.contract(function(data){
+			    if(data.code === "2000"){
+                    $('#table_form').find('tbody').html(methods.generateStringByTemplate({
+                        id : '_contract',
+                        params : {
+                            '%id':'idNumber',
+                            '%contract':'contractCode',
+                            '%username':'customerName',
+                            '%money':'monthRepay',
+                            '%disable' : 'disable',
+                            '%btn-submit_green' : 'btn-submit_green',
+                            '%hide' : 'hide'
+                        },
+                        data : function(){
+                        	for(var index in data.contractList){
+                        		if(data.contractList[index]['validateResult'] !== '0'){
+                        			data.contractList[index]['disable'] = 'disabled';
+                        			data.contractList[index]['btn-submit_green'] = '';
+                        		}else{
+                        			data.contractList[index]['disable'] = '';
+                        			data.contractList[index]['btn-submit_green'] = 'btn-submit_green';
+                        		}
+                        		if(data.contractList[index]['loanStatus'] == 60){
+                        			/*data.contractList[index]['hide'] = 'style="display:none"';*/
+                        			data.contractList[index]['hide'] = 'hide';
+                        		}else{
+                        			data.contractList[index]['hide'] = '';
+                        		}
+                        	}
+                        	return data.contractList;
+                        }()
+                    }))
+				}
+			});
+
+			/*合同信息页面点击充值调接口跳转url*/
+			$(".container").on("click",".rechargeBtn",function(){
+                service.generateUrl({
+                    token:$.cookie("data_token"),
+                    contractCode:$(this).attr('contractCode'),
+                    loginFlag:$.cookie("login_flag")
+				},function(data){
+                    if(data.code === "2000"){
+                        window.open(data.url);
+                    }
+                })
+			});
+			
+			/*合同信息页面点击认证按钮接口*/
+			$(".container").on("click",".identifyBtn",function(){
+				console.log(23);
+				service.contract(function(data){
+					if(data.code === "2000"){
+						var key;
+						var d = data.contractList;
+						for(key in d){
+							if(d[key].validateResult == "0"){
+								service.checkUrl({
+									token:$.cookie("data_token"),
+									contractCode:d[key].contractCode,
+									loginFlag:$.cookie("login_flag")
+								},function(data){
+									if(data.code === "2000"){
+										window.location.href = data.url;
+									}
+								})
+							}
+							
+							/*if(d[key].validateResult == "1"){
+								identify();
+							}
+							if(d[key].validateResult == "2"){
+								identify();
+							}*/
+						}
+					}
+				})
 			})
-		}
-		var init = (function(){
-			return function(){
-				fetchData();
+			/*function identify(txt){
+				var oMask = $('<div id="mask"></div>');
+				var oMaskContent = $('<div id="mask_content"></div>');
+				oMaskContent.text(txt);
+				$(oMask).append(oMaskContent);
+				$("body").append(oMask);
 			}
-		}());
+			$("body").on("click","#mask",function(){
+				$(this).hide();
+			})*/
+			function identify(){
+				$(".identifyBtn").removeClass("btn-submit_green");
+				$(".identifyBtn").attr("disabled",true);
+			}
+		}
+
+		function init() {
+            fetchData();
+        }
 		init();
 	}();
 </script>

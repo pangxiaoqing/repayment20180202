@@ -1,0 +1,155 @@
+<div class="main-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="title">合同信息</h1>
+                <div class="main-alert">
+                    <span class="alert alert-warning" role="alert"><i></i>信息确认无误后，请根据人工提示金额进行充值</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-box table-user">
+                <table class="table table-hover" id="table_form">
+                    <thead>
+                    <tr>
+                        <th width="27.5%">身份证号码</th>
+                        <th width="23.8%">合同编号</th>
+                        <th width="17.5%">姓名</th>
+                        <th width="15.5%">期供</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    !function(){
+        var methods = hmd.methods,
+            service = hmd.service
+        function fetchData(){
+            /*渲染合同信息页面的接口*/
+            service.hcContract({
+                token:$.cookie("daichang_data_token")
+            },function(data){
+                if(data.code === "2000"){
+                    $('#table_form').find('tbody').html(methods.generateStringByTemplate({
+                        id : '_daichangContract',
+                        params : {
+                            '%id':'idNumber',/*身份证号码，暂时不需要*/
+                            '%mp':'monthRepay',/*期供，暂时不需要*/
+                            '%contract':'contractCode',/*合同编号*/
+                            '%username':'customerName',/*姓名*/
+                            '%disable' : 'disable',
+                            '%btn-submit_green' : 'btn-submit_green',
+                            '%hide' : 'hide'
+                        },
+                        data :function(){
+                        	for(var index in data.contractList){
+                        		if(data.contractList[index]['validateResult'] !== '0'){
+                        			data.contractList[index]['disable'] = 'disabled';
+                        			data.contractList[index]['btn-submit_green'] = '';
+                        		}else{
+                        			data.contractList[index]['disable'] = '';
+                        			data.contractList[index]['btn-submit_green'] = 'btn-submit_green';
+                        		}
+                        		if(data.contractList[index]['loanStatus'] == 60){
+                        			data.contractList[index]['hide'] = 'style="display:none"';
+                        		}
+                        	}
+                        	return data.contractList
+                        }()
+                    }))
+                    /*loanStatus为60不显示充值按钮*/
+                   /*var d = data.contractList;
+                   var key;
+                   for(key in d){
+                   	if(d[key].loanStatus === "60"){
+                   		$("#recharge").hide();
+                   	}
+                   	if(d[key].validateResult != "0"){
+                   		identify();
+                   	}
+                   }*/
+                }
+            });
+
+            /*合同信息页面点击充值调接口跳转url*/
+            $(".container").on("click",".daichang_rechargeBtn",function(){
+                service.generateUrl({
+                    token:$.cookie("data_token"),
+                    contractCode:$(this).attr('contractCode'),
+                    loginFlag:$.cookie("login_flag")
+                },function(data){
+                    if(data.code === "2000"){
+                        window.open(data.url);
+                    }
+                })
+            });
+            
+            /*合同信息页面点击认证按钮接口*/
+			$(".container").on("click",".daichang_identifyBtn",function(){
+				service.hcContract({
+                	token:$.cookie("daichang_data_token")
+            	},function(data){
+					if(data.code == 2000){
+						var key;
+						var d = data.contractList;
+						for(key in d){
+							if(d[key].validateResult == "0"){
+								service.checkUrl({
+									token:$.cookie("daichang_data_token"),
+									contractCode:d[key].contractCode,
+									loginFlag:$.cookie("login_flag")
+								},function(data){
+									if(data.code === "2000"){
+										window.location.href = data.url;
+									}
+								})
+							}
+							
+							/*if(d[key].validateResult == "1"){
+								identify();
+							}
+							if(d[key].validateResult == "2"){
+								identify();
+							}
+							if(d[key].validateResult == null){
+								$("#daichang_identify").removeClass("btn-submit_green");
+								$("#daichang_identify").attr("disabled",true);
+							}*/
+						}
+					}
+				})
+			})
+			/*function identify(txt){
+				var oMask = $('<div id="mask"></div>');
+				var oMaskContent = $('<div id="mask_content"></div>');
+				oMaskContent.text(txt);
+				$(oMask).append(oMaskContent);
+				$("body").append(oMask);
+			}
+			$("body").on("click","#mask",function(){
+				$(this).hide();
+			})*/
+			function identify(){
+				$(".daichang_identifyBtn").removeClass("btn-submit_green");
+				$(".daichang_identifyBtn").attr("disabled",true);
+			}
+        }
+
+        function init() {
+            fetchData();
+        }
+        init();
+    }();
+</script>

@@ -30,12 +30,30 @@ hmd.extend(hmd.methods,{
 		return _arr.join('');
 			
 	},
-	/*
-	 * @description 委托代理
-	 * @params obj 里面的参数包括：type(代表事件类型，默认为click)
-	 * $obj 代表页面元素，jquery对象
-	 * callback 代表函数
-	 */
+
+
+    handleTemplate : function(obj){
+        obj = obj || {};
+        var id = obj.id || '__temp_html',
+            config = obj.config || {};
+        var __temp = $('#'+id),
+            _txt = __temp.text(),
+            _str_l = _txt.substring(0,_txt.indexOf('{')),
+            _str_r = _txt.substring(_txt.lastIndexOf('}')+1),
+            _str_c = _txt.substring(_txt.indexOf('{')+1,_txt.lastIndexOf('}'));
+        var func = new Function(_str_c);
+        var res = func.call(config)
+        res.unshift(_str_l);
+        res.push(_str_r)
+        return res;
+    },
+
+    /*
+     * @description 委托代理
+     * @params obj 里面的参数包括：type(代表事件类型，默认为click)
+     * $obj 代表页面元素，jquery对象
+     * callback 代表函数
+     */
 	delegate : function(obj){
 		var type = obj && obj.type ? obj.type : 'click',
 			$obj = obj.$obj,
@@ -58,6 +76,7 @@ hmd.extend(hmd.methods,{
 	*/
 	switchTap : function(obj){
 		obj = obj || {};
+        $('#'+id+' a').unbind();
 		var id = obj.id || 'myTab',
 			callback = obj.callback || function(){},
 			$tab = $('#'+id+' a').click(function(e){
@@ -193,10 +212,12 @@ hmd.extend(hmd.methods,{
 			visiblePages = obj.visiblePages || 10,
 			currentPage = obj.currentPage || 1,
 			callback = obj.callback || function(){};
-
+        /*if($('#'+id)[0]){
+            $('#'+id).jqPaginator('destroy');
+		}*/
 		$.jqPaginator('#'+id, {
-	        totalPages: totalPages,
-	        visiblePages: visiblePages,
+            totalCounts: totalPages,
+            pageSize: visiblePages,
 	        currentPage: currentPage,
 	        first:'<li class="first"><a href="javascript:;">首页</a></li>',
 	        prev: '<li class="prev"><a href="javascript:;">上一页</a></li>',
@@ -219,7 +240,7 @@ hmd.extend(hmd.methods,{
 			integer : function(){
 				this.value = this.value.replace(/[^\d]/g,'')
 			}
-		}
+		};
 		$(document.body).keyup(function(e){
 			var target = e.target;
 			if(target.nodeName === 'INPUT'){
@@ -230,6 +251,23 @@ hmd.extend(hmd.methods,{
 				}
 			}
 		})
-	}
-	
-})
+	},
+    /*
+     * @description 发送验证码倒计时
+    */
+   
+    /*注销接口*/
+    logout: function(callback){
+        // obj.unbind();
+        hmd.service.logout(function(data){
+            if(data.code === "2000"){
+                $.cookie("data_token",null);   
+                callback();        
+            }else{
+            	console.error(data.desc)
+            }
+        })
+    }
+
+
+});

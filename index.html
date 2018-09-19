@@ -28,7 +28,15 @@
         <td scope="row"><span>%contract</span></td>
         <td scope="row">%username</td>
         <td scope="row">%money</td>
-        <td><a href="javascript;" contract='%id' class="btn btn-submit">充值</a></td>
+        <td style="display:flex;">
+          <!--<a href="javascript:;" contract='%id' contractCode="%contract" class="btn btn-submit recharge" style="margin-right:20px;">充值</a>-->
+          <!--<a href="javascript:;" class="btn btn-submit_green identify">认证</a>-->
+          <button contract='%id' contractCode="%contract" class="identify btn-submit rechargeBtn %hide" style="margin-right:20px;">充值</button>
+          <button class="identify %btn-submit_green identifyBtn" %disable>认证</button>
+        </td>
+        <!--<td>
+          <a href="javascript:;" contract='%id' contractCode="%contract" class="btn btn-submit recharge">充值</a>
+        </td>-->
       </tr>
     </script>
     <script type="text/template" id="_recharge">
@@ -40,9 +48,45 @@
         <td>%result</td>
       </tr>
     </script>
+    <script type="text/template" id="_daichangContract">
+      <tr>
+        <td scope="row">——</td>
+        <td scope="row"><span>%contract</span></td>
+        <td scope="row">%username</td>
+        <td scope="row">——</td>
+        <td style="display:flex;">
+          <!--<a href="javascript:;" contract='%id' contractCode="%contract" class="btn btn-submit recharge" style="margin-right:20px;">充值</a>
+          <a href="javascript:;" class="btn btn-submit_green daichang_identify">认证</a>-->
+          <button contract='%id' contractCode="%contract" class="identify btn-submit daichang_rechargeBtn" %hide style="margin-right:20px;">充值</button>
+          <button class="identify %btn-submit_green daichang_identifyBtn" %disable>认证</button>
+        </td>
+        <!--<td>
+          <a href="javascript:;" contract='%id' contractCode="%contract" class="btn btn-submit recharge">充值</a>
+        </td>-->
+      </tr>
+    </script>
+    <script type="text/template" id="_daichangRecharge">
+      <tr>
+        <td>%id</td>
+        <td><span>%contract</span></td>
+        <td>%username</td>
+        <td>%money</td>
+        <td>%result</td>
+      </tr>
+    </script>
+    <script type="text/template" id="__temp_html">
+
+      {
+        var _str = '';
+        _str = '<li class="active"><a href="#'+this.tapA+'" name="'+this.tapA+'" data-toggle="tab">'+this.tapA_info+'</a></li><li><a href="#'+this.tapB+'" name="'+this.tapB+'" data-toggle="tab">'+this.tapB_info+'</a></li>';
+
+      return [_str];
+      }
+
+    </script>
     <script src="./script/Libs/jquery.1.9.min.js"></script>
     <script src="./script/hmd.js"></script>
-    <script src="./script/Router/AppCommonRouter.js"></script>
     <script src="./script/Controller/index.js"></script>
+    <script src="./script/Libs/jquery.cookie-min.js"></script>
   </body>
 </html>

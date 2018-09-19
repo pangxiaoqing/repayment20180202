@@ -13,20 +13,40 @@
 
 	hmd.require(url_arr,function(){
 		var methods = hmd.methods,
-			$root = $('#root');
+			$root = $('#root'),
+			service = hmd.service;
 		
 		function routerToLoginOrNo(){
-			$root.load(methods.loadUrl('login'),function(){
-				hmd.require(['./../script/Controller/login.js'])
-			})
-		}
-
-		var init = (function(){
-			return function(){
-				methods.addKeyUpToInput();
-				routerToLoginOrNo()
+			if($.cookie("data_token")===""){
+                $root.load(methods.loadUrl('login'),function(){
+                    hmd.require(['./../script/Controller/login.js'])
+                })
 			}
-		}());
+		}
+		/*验证是否已经登录的接口*/
+		function hasLogin() {
+            service.hasLogin(function(data){
+                // if(data.code === "2000") {
+                    if (data.token) {
+                        hmd.component({
+                            temp: 'content',
+                            id: 'root'
+                        })
+                    } else {
+                        hmd.component({
+                            temp: '_login_temp',
+                            id: 'root'
+                        })
+                    }
+                // }
+            });
+        }
+
+		function init() {
+            hasLogin();
+            methods.addKeyUpToInput();
+            routerToLoginOrNo();
+        }
 
 		init();
 	})

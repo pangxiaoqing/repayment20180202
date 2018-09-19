@@ -24,18 +24,29 @@ input[type="text"],input[type="password"]{
 select{
     padding:5px 5px;font-size:14px;line-height:33px;
 }
-.btn{
+/*.btn{
     padding:5px 15px;
     color:#fff!important;
     border-radius:20px;
-}
+}*/
 .btn-submit{
     background-color:#1b96fe;
+}
+.btn-submit_green{
+    background-color:#b3d465;
 }
 .btn-reset{
     background-color:#b3d465;
 }
-
+.identify{
+	width: 64px;
+    height: 34px;
+    line-height: 34px;
+    /*background-color: #b3d465;*/
+    color: #fff;
+    font-size: 16px;
+    border-radius: 50px;
+}
 /* header */
 #header{
     height:76px;
@@ -168,6 +179,7 @@ select{
 /*common*/
 input,button{
     outline:none;
+    border:none;
 }
 /*page*/
 .content{
@@ -179,16 +191,10 @@ input,button{
     -moz-box-shadow:2px 2px 8px 4px rgba(34,72,88,.35);
     -webkit-box-shadow:2px 2px 8px 4px rgba(34,72,88,.35);
     box-shadow:2px 2px 8px 4px rgba(34,72,88,.35);
-    /*box-shadow:2px 2px 8px 4px rgba(34,72,88,.35);*/
-    /*box-shadow:0 0 10px 0 #224858;*/
-    /*filter:alpha(opacity = 35);
-    opacity:0.35;
-    -webkit-opacity:0.35;
-    -moz-opacity:0.35;*/
     position: relative;
 }
 .content_in{
-    width:310px;
+    width:300px;
     height:400px;
     background-color:#fff;
     border-radius:10px;
@@ -196,45 +202,99 @@ input,button{
     -moz-box-shadow:2px 2px 8px 4px rgba(34,72,88,.35);
     -webkit-box-shadow:2px 2px 8px 4px rgba(34,72,88,.35);
     box-shadow:2px 2px 8px 4px rgba(34,72,88,.35);
-    /*box-shadow:0 0 20px 0 rgba(34,72,88,.35);*/
-    /*filter:alpha(opacity = 35);
-    opacity:0.35;
-    -webkit-opacity:0.35;
-    -moz-opacity:0.35;*/
-    position: absolute;
     left:50%;
     top:104px;
-    margin-left:-155px;
+    margin-left:-150px;
+    position:relative;
 }
-.content_box{
-    margin:80px 42px 48px;
+.content_in #nav{
+    display:flex;
 }
-.input{
-    width:226px;
-    border-bottom:1px solid #e6e9ed;
-
+.content_in a,.content_in a:link,.content_in a:visited,.content_in a:hover,.content_in a:active{
+    text-decoration:none;
 }
-.input input{
-    margin-bottom:4px;
-    /*line-height:50px;*/
-}
-.float{
-    overflow: hidden;
-}
-.code_button{
-    float:left;
-    padding: 0 14px;
-    height:16px;
-    border:none;
-    background-color:#fff;
-    color:#5d6b72;
+.content_in #nav a{
+    width:150px;
+    height:50px;
+    text-align:center;
+    line-height:50px;
     font-size:12px;
-    margin-top:10px;
-    /*font-weight: bold;*/
-    /*color:red;*/
-    /*border-left:1px solid #e6e9ed;*/
+    color:#1b96fe;
 }
-.button{
+.content_in #nav a.nav_left{
+    border-top-left-radius:10px;
+}
+.content_in #nav a.nav_right{
+    border-top-right-radius:10px;
+}
+.content_in #nav a.on{
+    background-color:#c4dcfd;
+    color:#fff;
+}
+#contentBox{
+    width:226px;
+    margin:0 auto;
+}
+#contentBox .active{
+    display:block;
+}
+#contentBox .box{
+    width:226px;
+    margin:0 auto;
+    display:none;
+}
+#contentBox .box .input{
+    font-size:14px;
+    color:#5d6b72;
+    height:66px;
+    line-height:92px;
+    border-bottom:1px solid #e6e9ed;
+    position: relative;
+}
+.martop26{
+    margin-top:26px;
+}
+#contentBox .box .input .idCard{
+    border:none;
+    color:#5d6b72;
+    font-size:14px;
+    width:226px;
+    height:30px;
+}
+#contentBox .box .identifying_code,#contentBox .box .tel_sendcode{
+    display:flex;
+    padding-top:30px;
+}
+#contentBox .box .identifying_code .tel_num{
+    font-size:14px;
+    width:100px;
+    height:30px;
+    border:none;
+    color:#5D6B72;
+}
+#contentBox .box .login_span{
+    float: left;
+    height:16px;
+    border:1px solid #e6e9ed;
+    margin-top:8px;
+}
+#contentBox .box .identifying_code img{
+    width:80px;
+    height:24px;
+    margin:4px 8px 0;
+}
+#contentBox .box .identifying_code .refresh{
+    width:16px;
+    height:30px;
+    background:url("../img/refresh.png") no-repeat center 8px;
+}
+#contentBox .box .message{
+    font-size:14px;
+    color:#eb557f;
+    margin-top:16px;
+    display: none;
+}
+#contentBox .box .button{
     width:166px;
     height:36px;
     background-color:#1a96fe;
@@ -243,69 +303,83 @@ input,button{
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px;
-    /*margin:36px 0 0 28px;*/
-    position: absolute;
+    border:none;
+    outline:none;
+    position:absolute;
     left:50%;
-    bottom:48px;
     margin-left:-83px;
-    /*behavior: url(pie.htc);*/
-    /*behavior: url(ie-css3.htc);*/
+    bottom:42px;
+}
+.box .tel_sendcode{
+    display:flex;
+}
+#contentBox .box .tel_sendcode .idCard{
+    width:130px;
+    height:30px;
+}
+#contentBox .box .tel_sendcode a.code_button{
+    display: inline-block;
+    /*width: 84px;*/
+    height: 24px;
+    line-height:24px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    text-align: center;
+    font-size:12px;
+    margin-top:4px;
+    margin-left: 6px;
+    padding: 0 14px;
+}
+.code_button_cur{
+    background-color:#b3d465;
+    color:#fff;
+}
+.code_button_cur_disabled{
+    background-color:#ccc;
+    color:#fff;
+}
+.code_button_cur_disabled:hover,.code_button_cur_disabled:active,a.code_button_cur_disabled:visited,a.code_button_cur_disabled:link,.code_button_cur:link,.code_button_cur:hover,.code_button_cur:visited,.code_button_cur:active{
+    text-decoration: none;
+    color:#FFF;
+}
+#contentBox label{
+    line-height: 30px;
+    padding-left: 5px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    cursor: text;
 }
 .button:hover,.button:link,.button:visited,.button:active{
     color:#fff;
 }
-.code_button_cur{
-    width:80px;
-    height:24px;
-    background-color:#b3d465;
-    color:#fff;
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
-    margin:6px 0 0 14px;
-    border:none;
-    padding:0;
-    /*behavior: url(pie.htc);*/
-    /*behavior: url(PIE.htc);*/
+#mask{
+	width:100%;
+	height:100%;
+	position:absolute;
+	z-index: 999;
+	top:0;
+	left:0;
+	background-color: rgba(0,0,0,0.3);
 }
-
-/*.code_button_cur:before{
-    border-left:1px solid #e6e9ed;
-    content:"";
-}*/
-.message{
-    font-size:14px;
-    color:#eb557f;
-    margin-top:16px;
-    display: none;
+#mask_content{
+	position:absolute;
+	z-index: 9999;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	width:200px;
+	height:160px;
+	margin:auto;
+	background-color:#fff;
+	color:#666;
+	text-align: center;
+	line-height: 160px;
+	font-size: 26px;
+	border-radius: 6px;
 }
-.input .idCard{
-    border:none;
-    color:#5d6b72;
-    font-size:14px;
-    width:226px;
-    height:30px;
-    /*padding:6px 0;*/
-}
-.input .tel_num{
-    border:none;
-    color:#5d6b72;
-    font-size:14px;
-    width:126px;
-    float: left;
-    height:30px;
-    margin:4px 0;
-}
-.input_div{
-    padding:26px 0 2px;
-}
-.reset_input_martop{
-    margin-top:32px;
-}
-.login_span{
-    /*color:#e6e9ed;*/
-    float: left;
-    height:16px;
-    border:1px solid #e6e9ed;
-    margin-top:10px;
+.hide{
+	display: none;
 }
